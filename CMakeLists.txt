@@ -7,11 +7,19 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-if(MSVC)
-    add_compile_options(/W4 /WX)
-else()
-    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
-endif()
+add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+
+enable_testing()
 
 add_executable(Payroll payroll/src/main.cpp)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+add_subdirectory(payroll/tests)
+
+add_custom_target(
+    check_tests ALL
+    COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Running unit tests..."
+    DEPENDS test_GTest
+)

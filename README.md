@@ -23,4 +23,11 @@ docker run -it --rm -v $(pwd):/app payroll
 Or, with Docker Compose:
 ```bash
 docker compose run --rm -it payroll
+```  
+
+## Running Tests
+
+in the build file run:  
+```bash
+ctest
 ```
