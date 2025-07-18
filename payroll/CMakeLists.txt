@@ -9,9 +9,9 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 set(TEST_OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin_test)
-file(MAKE_DIRECTORY ${TEST_OUTPUT_DIR})  # Ensure the directory exists
+file(MAKE_DIRECTORY ${TEST_OUTPUT_DIR})  
 
-add_executable(test_GTest test_GTest.cpp) # <-- Make sure test_GTest.cpp exists
+add_executable(test_GTest tests/test_GTest.cpp)
 set_target_properties(test_GTest PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${TEST_OUTPUT_DIR}
 )
