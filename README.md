@@ -23,7 +23,10 @@ docker run -it --rm -v $(pwd):/app payroll
 Or, with Docker Compose:
 ```bash
 docker compose run --rm -it payroll
-```  
+```
+
+## Building with CMake
+Use the [cleanCompileBuild.sh](./cleanCompileBuild.sh) file and pass Release or Debug as parameter. The binary will be in the build/bin
 
 ## Running Tests
 
