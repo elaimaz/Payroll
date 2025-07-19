@@ -33,4 +33,11 @@ Use the [cleanCompileBuild.sh](./cleanCompileBuild.sh) file and pass Release or 
 in the build file run:  
 ```bash
 ctest
+```  
+
+## Running cppcheck  
+
+Running cppcheck on an specific file:  
+```bash
+cppcheck --enable=all --std=c++23 --platform=unix64 --suppress=missingIncludeSystem --suppress=checkersReport --quiet --checkers-report=cppcheck.report payroll/src/main.cpp
 ```

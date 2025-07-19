@@ -2,13 +2,16 @@
 
 set -e  # Exit on error
 
+# Set default build type
+BUILD_TYPE="Debug"
+
 # Check input
-if [ "$#" -ne 1 ]; then
+if [ "$#" -eq 1 ]; then
+    BUILD_TYPE="$1"
+elif [ "$#" -gt 1 ]; then
     echo "Usage: $0 [Debug|Release]"
     exit 1
 fi
-
-BUILD_TYPE="$1"
 
 # Validate input
 if [[ "$BUILD_TYPE" != "Debug" && "$BUILD_TYPE" != "Release" ]]; then
@@ -29,7 +32,7 @@ fi
 
 # Configure and build
 echo "Configuring with build type: $BUILD_TYPE"
-cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..
+cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
 echo "Building..."
 cmake --build .
 
