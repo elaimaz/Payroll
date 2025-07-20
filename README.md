@@ -40,4 +40,11 @@ ctest
 Running cppcheck on an specific file:  
 ```bash
 cppcheck --enable=all --std=c++23 --platform=unix64 --suppress=missingIncludeSystem --suppress=checkersReport --quiet --checkers-report=cppcheck.report payroll/src/main.cpp
+```  
+
+# Running valgrind  
+
+Running Valgrind on the binary file:  
+```bash
+valgrind --leak-check=full --show-leak-kinds=all ./Payroll
 ```

@@ -7,12 +7,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Set gcc flags
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
-set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Werror -D_GLIBCXX_DEBUG -fno-omit-frame-pointer -fstack-protector-strong -fsanitize=address,undefined")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Wshadow -Wduplicated-cond -Wduplicated-branches -D_GLIBCXX_DEBUG -fno-omit-frame-pointer -fstack-protector-strong -fsanitize=address,undefined,leak,pointer-compare,pointer-subtract")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -flto=auto -march=native -s")
 
 enable_testing()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+message("CMAKE_RUNTIME_OUTPUT_DIRECTORY = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 add_executable(Payroll payroll/src/main.cpp)
 
 add_subdirectory(payroll)
@@ -53,3 +54,22 @@ add_custom_target(
     DEPENDS test_GTest
     COMMENT "Running unit tests..."
 )
+
+set(RUN_VALGRIND FALSE)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(NOT CMAKE_CXX_FLAGS_DEBUG MATCHES "-fsanitize=address")
+        set(RUN_VALGRIND TRUE)
+    endif()
+endif()
+
+if(RUN_VALGRIND)
+    add_test(
+        NAME valgrind_check
+        COMMAND valgrind 
+            --leak-check=full 
+            --show-leak-kinds=all 
+            --track-origins=yes 
+            --error-exitcode=1 
+            ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Payroll
+    )
+endif()
