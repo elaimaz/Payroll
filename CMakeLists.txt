@@ -14,9 +14,11 @@ enable_testing()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 message("CMAKE_RUNTIME_OUTPUT_DIRECTORY = ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-add_executable(Payroll payroll/src/main.cpp)
 
 add_subdirectory(payroll)
+
+add_executable(Payroll src/main.cpp)
+target_link_libraries(Payroll PRIVATE payroll_core)
 
 # Find Cppcheck and setup analysis
 find_program(CPPCHECK cppcheck)
@@ -51,7 +53,7 @@ add_custom_target(
     check_tests ALL
     COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    DEPENDS test_GTest
+    DEPENDS test_runner
     COMMENT "Running unit tests..."
 )
 
