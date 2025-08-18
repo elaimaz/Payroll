@@ -21,7 +21,7 @@ public:
      * @param CommisionRate employee commission rate (default is 0.0).
      * @return Number of employees added.
      */
-    int addEmployee(
+    int AddEmployee(
         unsigned long long EmpID, 
         const std::string& Name, 
         const std::string& Address, 
@@ -29,4 +29,12 @@ public:
         const double Income = 0.0,
         const double CommisionRate = 0.0
     ) const override;
+
+    /**
+     * @brief Delete employee by ID.
+     * 
+     * @param EmpID employee ID.
+     * @return true if employee was deleted, false otherwise.
+     */
+    bool DeleteEmployee(const unsigned long long EmpID) const override;
 };

@@ -4,7 +4,7 @@
 
 class IEmployee {
 public:
-    virtual int addEmployee(
+    virtual int AddEmployee(
         unsigned long long EmpID, 
         const std::string& Name, 
         const std::string& Address, 
@@ -12,6 +12,8 @@ public:
         const double Income = 0.0,
         const double CommisionRate = 0.0
     ) const = 0;
+
+    virtual bool DeleteEmployee(const unsigned long long EmpID) const = 0;
 
     virtual ~IEmployee() = default;
 };
